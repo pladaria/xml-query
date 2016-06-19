@@ -20,6 +20,7 @@ interface XmlQuery {
     last: Function;
     length: Function;
     map: Function;
+    prop: Function;
     size: Function;
 }
 
