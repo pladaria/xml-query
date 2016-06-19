@@ -22,7 +22,7 @@ const xmlQuery = (node) => {
     };
 
     const find = (sel) =>
-        xmlQuery(flatMap(nodes, node => findInNode(node, sel)));
+        xmlQuery(flatMap(nodes, (node) => findInNode(node, sel)));
 
     const children = () =>
         xmlQuery(flatMap(nodes, (node) => node.children));
