@@ -150,3 +150,14 @@ test('attr', t => {
     });
     reader.parse(xmlMessage1);
 });
+
+test('children', t => {
+    const reader = xmlReader.create();
+    reader.on('done', ast => {
+        const xq = xQuery(ast).children();
+        t.equal(xq.length, 4, 'length is 4');
+        t.deepEqual(xq.map(node => node.name), ['to', 'from', 'subject', 'body'], 'children names ok');
+        t.end();
+    });
+    reader.parse(xmlMessage1);
+});

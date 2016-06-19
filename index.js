@@ -9,7 +9,7 @@
 
 const flatMap = (arr, fn) => [].concat(...arr.map(fn));
 
-const xmlQuery = function (node) {
+const xmlQuery = (node) => {
 
     const nodes = Array.isArray(node) ? node : [node];
     const length = nodes.length;
@@ -24,6 +24,9 @@ const xmlQuery = function (node) {
     const find = (sel) =>
         xmlQuery(flatMap(nodes, node => findInNode(node, sel)));
 
+    const children = () =>
+        xmlQuery(flatMap(nodes, (node) => node.children));
+
     const attr = (name) => {
         if (!length) {
             return;
@@ -35,14 +38,23 @@ const xmlQuery = function (node) {
     const eq = (n) => xmlQuery(nodes[n]);
     const first = () => eq(0);
     const last = () => eq(length - 1);
+    const map = (fn) => nodes.map(fn);
+    const size = () => length;
+
+    // @todo
+    // .prop()
+    // .each()
 
     return {
         attr,
+        children,
         eq,
         find,
         first,
         get,
         length,
+        map,
+        size,
     };
 };
 
