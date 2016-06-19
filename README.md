@@ -52,6 +52,14 @@ const xq = xmlQuery(ast);
 const xq = xmlQuery([ast, ...more]);
 ```
 
+### .get()
+
+Retrieve one of the elements.
+
+```javascript
+xmlQuery(ast).find('body').get(2); // returns the `subject` node
+```
+
 ### .find()
 
 Find by name. Including top level nodes and all its children.
@@ -98,11 +106,20 @@ Iterate over a xmlQuery object, executing a function for each element. Returns t
 xmlQuery(ast).map(node => node.name); // ['from', 'to', 'subject', 'body']
 ```
 
-eq,
-find,
-first,
-get,
-last,
-length,
-map,
-size,
+### .prop()
+
+Get the value of a property for the first element in the set.
+
+```javascript
+xmlQuery(ast).prop('name'); // 'message'
+```
+
+### .eq()
+
+### .first()
+
+### .last()
+
+### .length
+
+### .size()
