@@ -9,9 +9,9 @@
 
 const flatMap = (arr, fn) => [].concat(...arr.map(fn));
 
-const xmlQuery = (node) => {
+const xmlQuery = (ast) => {
 
-    const nodes = Array.isArray(node) ? node : [node];
+    const nodes = Array.isArray(ast) ? ast : [ast];
     const length = nodes.length;
 
     const get = (i) => nodes[i];
