@@ -3,5 +3,6 @@ env:
   es6: true
   browser: true
 rules:
-  no-unused-vars: 2
-  indent: [2, 4, {SwitchCase: 1}]
+  no-unused-vars: error
+  indent: [error, 4, {SwitchCase: 1}]
+  semi: [error, always]

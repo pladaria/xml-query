@@ -50,10 +50,13 @@ test('constructor from ast array', t => {
     reader.parse(xmlMessage1);
 });
 
-test('constructor from empty array', t => {
-    const xq = xQuery([]);
-    t.equal(xq.length, 0, 'length is 0');
-    t.equal(xq.get(0), undefined, 'item 0 is undefined');
+test('constructor from falsy values', t => {
+    const values = [null, false, undefined, 0, [], ''];
+    values.forEach(value => {
+        const xq = xQuery(value);
+        t.equal(xq.length, 0, 'length is 0');
+        t.equal(xq.get(0), undefined, 'item 0 is undefined');
+    });
     t.end();
 });
 
