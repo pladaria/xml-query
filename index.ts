@@ -18,7 +18,7 @@ interface XmlQuery {
     first: Function;
     get: Function;
     last: Function;
-    length: Function;
+    length: number;
     map: Function;
     prop: Function;
     size: Function;
