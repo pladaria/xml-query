@@ -1,3 +1,4 @@
 index.ts
 tsconfig.json
-test
+testcoverage
+.nyc_output
