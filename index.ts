@@ -102,7 +102,7 @@ const xmlQuery = (ast: XmlNode|XmlNode[]) => {
      * Get the value of a property for the first element in the set
      */
     const prop = (name: string) => {
-        const node = first();
+        const node = get(0);
         if (node) {
             return node[name];
         }

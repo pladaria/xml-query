@@ -27,7 +27,7 @@ var xmlQuery = function (ast) {
     var each = function (fn) { return nodes.forEach(fn); };
     var size = function () { return length; };
     var prop = function (name) {
-        var node = first();
+        var node = get(0);
         if (node) {
             return node[name];
         }

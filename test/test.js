@@ -155,3 +155,28 @@ test.cb('text', t => {
     });
     reader.parse(xmlMessage1);
 });
+
+test.cb('prop', t => {
+    const reader = xmlReader.create();
+    reader.on('done', ast => {
+        t.is(xQuery(ast).prop('name'), 'message');
+        t.is(xQuery(ast).prop('type'), 'element');
+        t.is(xQuery(ast).prop('unknown?'), undefined);
+        t.end();
+    });
+    reader.parse(xmlMessage1);
+});
+
+test.cb('eq, first, last', t => {
+    const reader = xmlReader.create();
+    reader.on('done', ast => {
+        t.is(xQuery(ast).children().eq(0).prop('name'), 'to');
+        t.is(xQuery(ast).children().first().prop('name'), 'to');
+        t.is(xQuery(ast).children().eq(3).prop('name'), 'body');
+        t.is(xQuery(ast).children().last().prop('name'), 'body');
+        t.is(xQuery(ast).children().eq(10).length, 0);
+        t.is(xQuery(ast).children().eq(-1).length, 0);
+        t.end();
+    });
+    reader.parse(xmlMessage1);
+});
