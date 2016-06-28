@@ -1,5 +1,7 @@
 "use strict";
-var flatMap = function (arr, fn) { return (_a = []).concat.apply(_a, arr.map(fn)); var _a; };
+var flatMap = function (arr, fn) {
+    return Array.prototype.concat.apply([], arr.map(fn));
+};
 var xmlQuery = function (ast) {
     var nodes = Array.isArray(ast) ? ast : (ast ? [ast] : []);
     var length = nodes.length;

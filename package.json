@@ -19,7 +19,8 @@
     "get",
     "read",
     "values",
-    "attributes"
+    "attributes",
+    "xpath"
   ],
   "author": "Pedro Ladaria <pedro.ladaria@gmail.com>",
   "license": "MIT",

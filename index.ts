@@ -1,4 +1,5 @@
-const flatMap = (arr: any[], fn: (v: any, i: number, a: any[]) => any) => [].concat(...arr.map(fn));
+const flatMap = (arr: any[], fn: (v: any, i: number, a: any[]) => any) =>
+    Array.prototype.concat.apply([], arr.map(fn));
 
 interface XmlNode {
     name: string;

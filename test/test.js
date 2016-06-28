@@ -102,32 +102,32 @@ test.cb('find deep', t => {
 test.cb('attr', t => {
     const reader = xmlReader.create();
     reader.on('done', ast => {
-        let result, attr1, attr2;
+        t.deepEqual(xQuery(ast).find('message').attr(), {id: '1001', type: 'letter'},
+            'attr from ast: get all');
 
-        result = xQuery(ast).find('message').attr();
-        t.deepEqual(result, {id: '1001', type: 'letter'}, 'attr from ast - get all');
+        t.is(xQuery(ast).find('message').attr('id'), '1001',
+            'attr from ast: get by name');
 
-        attr1 = xQuery(ast).find('message').attr('id');
-        attr2 = xQuery(ast).find('message').attr('type');
-        t.is(attr1, '1001', 'attr from ast - get by name');
-        t.is(attr2, 'letter', 'attr from ast - get by name');
+        t.is(xQuery(ast).find('message').attr('type'), 'letter',
+            'attr from ast: get by name');
 
-        result = xQuery(ast).find('message').attr('miss');
-        t.is(result, undefined, 'attr from ast - get by name miss');
+        t.is(xQuery(ast).find('message').attr('miss'), undefined,
+            'attr from ast: get by name miss');
 
-        result = xQuery([ast, ast]).find('message').attr();
-        t.deepEqual(result, {id: '1001', type: 'letter'}, 'attr from ast array - get all');
+        t.deepEqual(xQuery([ast, ast]).find('message').attr(), {id: '1001', type: 'letter'},
+            'attr from ast array: get all');
 
-        attr1 = xQuery(ast).find('message').attr('id');
-        attr2 = xQuery(ast).find('message').attr('type');
-        t.is(attr1, '1001', 'attr from ast array - get by name');
-        t.is(attr2, 'letter', 'attr from ast array - get by name');
+        t.is(xQuery(ast).find('message').attr('id'), '1001',
+            'attr from ast array: get by name');
 
-        result = xQuery([]).attr();
-        t.deepEqual(result, undefined, 'attr from empty array - get all');
+        t.is(xQuery(ast).find('message').attr('type'), 'letter',
+            'attr from ast array: get by name');
 
-        result = xQuery([]).attr('miss');
-        t.deepEqual(result, undefined, 'attr from empty array - get by name');
+        t.deepEqual(xQuery([]).attr(), undefined,
+            'attr from empty array - get all');
+
+        t.deepEqual(xQuery([]).attr('miss'), undefined,
+            'attr from empty array - get by name');
 
         t.end();
     });
@@ -162,6 +162,7 @@ test.cb('prop', t => {
         t.is(xQuery(ast).prop('name'), 'message');
         t.is(xQuery(ast).prop('type'), 'element');
         t.is(xQuery(ast).prop('unknown?'), undefined);
+        t.is(xQuery([]).prop('zero'), undefined);
         t.end();
     });
     reader.parse(xmlMessage1);
@@ -176,6 +177,30 @@ test.cb('eq, first, last', t => {
         t.is(xQuery(ast).children().last().prop('name'), 'body');
         t.is(xQuery(ast).children().eq(10).length, 0);
         t.is(xQuery(ast).children().eq(-1).length, 0);
+        t.end();
+    });
+    reader.parse(xmlMessage1);
+});
+
+test.cb('map', t => {
+    const reader = xmlReader.create();
+    reader.on('done', ast => {
+        const result = xQuery(ast).children().map((node, index, array) => {
+            t.deepEqual(node, array[index]);
+            return node.name;
+        });
+        const expected = ['to', 'from', 'subject', 'body'];
+        t.deepEqual(result, expected);
+        t.end();
+    });
+    reader.parse(xmlMessage1);
+});
+
+test.cb('size, length', t => {
+    const reader = xmlReader.create();
+    reader.on('done', ast => {
+        t.is(xQuery(ast).children().size(), 4);
+        t.is(xQuery(ast).children().length, 4);
         t.end();
     });
     reader.parse(xmlMessage1);
