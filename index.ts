@@ -69,17 +69,17 @@ const xmlQuery = (ast: XmlNode|XmlNode[]) => {
     };
 
     /**
-     * Returns a new XmlQuery for the selected element by index
+     * Returns a new XmlQuery object for the selected element by index
      */
     const eq = (index: number) => xmlQuery(nodes[index]);
 
     /**
-     * Returns a new XmlQuery for the first element
+     * Returns a new XmlQuery object for the first element
      */
     const first = () => eq(0);
 
     /**
-     * Returns a new XmlQuery for the last element
+     * Returns a new XmlQuery object for the last element
      */
     const last = () => eq(length - 1);
 
@@ -101,11 +101,26 @@ const xmlQuery = (ast: XmlNode|XmlNode[]) => {
     /**
      * Get the value of a property for the first element in the set
      */
-    const prop = (name?: string) => {
+    const prop = (name: string) => {
         const node = first();
         if (node) {
             return node[name];
         }
+    };
+
+    /**
+     * Get the combined text contents of each element, including their descendants
+     */
+    const text = () => {
+        let res = '';
+        each(node => {
+            if (node.type === 'text') {
+                res += node.value;
+            } else {
+                res += xmlQuery(node).children().text();
+            }
+        });
+        return res;
     };
 
     return {
@@ -121,6 +136,7 @@ const xmlQuery = (ast: XmlNode|XmlNode[]) => {
         map,
         prop,
         size,
+        text,
     };
 };
 

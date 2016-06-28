@@ -32,6 +32,18 @@ var xmlQuery = function (ast) {
             return node[name];
         }
     };
+    var text = function () {
+        var res = '';
+        each(function (node) {
+            if (node.type === 'text') {
+                res += node.value;
+            }
+            else {
+                res += xmlQuery(node).children().text();
+            }
+        });
+        return res;
+    };
     return {
         attr: attr,
         children: children,
@@ -45,6 +57,7 @@ var xmlQuery = function (ast) {
         map: map,
         prop: prop,
         size: size,
+        text: text,
     };
 };
 module.exports = xmlQuery;

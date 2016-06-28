@@ -164,3 +164,14 @@ test('children', t => {
     });
     reader.parse(xmlMessage1);
 });
+
+test('text', t => {
+    const reader = xmlReader.create();
+    reader.on('done', ast => {
+        const expected = 'AliceBobHelloThis is a demo!';
+        const result = xQuery(ast).text();
+        t.equal(result, expected, 'text is correct');
+        t.end();
+    });
+    reader.parse(xmlMessage1);
+});
