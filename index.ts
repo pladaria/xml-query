@@ -1,9 +1,5 @@
 const flatMap = (arr: any[], fn: (v: any, i: number, a: any[]) => any) => [].concat(...arr.map(fn));
 
-/**
- * @param {XmlNode|XmlNode[]} ast - Single XmlNode or array of XmlNodes
- * @return {XmlQuery}
- */
 const xmlQuery = (ast: xmlQuery.XmlNode | xmlQuery.XmlNode[]) => {
 
     const nodes = Array.isArray(ast) ? ast : (ast ? [ast] : []);
@@ -109,21 +105,6 @@ namespace xmlQuery {
         parent: XmlNode;
         attributes: { [name: string]: string };
         children: XmlNode[];
-    }
-
-    export interface XmlQuery {
-        attr: Function;
-        children: Function;
-        each: Function;
-        eq: Function;
-        find: Function;
-        first: Function;
-        get: Function;
-        last: Function;
-        length: number;
-        map: Function;
-        prop: Function;
-        size: Function;
     }
 }
 
