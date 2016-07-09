@@ -1,34 +1,10 @@
 const flatMap = (arr: any[], fn: (v: any, i: number, a: any[]) => any) => [].concat(...arr.map(fn));
 
-interface XmlNode {
-    name: string;
-    type: string;
-    value: string;
-    parent: XmlNode;
-    attributes: {[name: string]: string};
-    children: XmlNode[];
-}
-
-interface XmlQuery {
-    attr: Function;
-    children: Function;
-    each: Function;
-    eq: Function;
-    find: Function;
-    first: Function;
-    get: Function;
-    last: Function;
-    length: number;
-    map: Function;
-    prop: Function;
-    size: Function;
-}
-
 /**
  * @param {XmlNode|XmlNode[]} ast - Single XmlNode or array of XmlNodes
  * @return {XmlQuery}
  */
-const xmlQuery = (ast: XmlNode|XmlNode[]) => {
+const xmlQuery = (ast: xmlQuery.XmlNode | xmlQuery.XmlNode[]) => {
 
     const nodes = Array.isArray(ast) ? ast : (ast ? [ast] : []);
     const length = nodes.length;
@@ -41,7 +17,7 @@ const xmlQuery = (ast: XmlNode|XmlNode[]) => {
     /**
      * Recursively find by name starting in the provided node
      */
-    const findInNode = (node: XmlNode, sel: string) => {
+    const findInNode = (node: xmlQuery.XmlNode, sel: string) => {
         const res = (node.name === sel) ? [node] : [];
         return res.concat(flatMap(node.children, (node) => findInNode(node, sel)));
     };
@@ -86,12 +62,12 @@ const xmlQuery = (ast: XmlNode|XmlNode[]) => {
     /**
      * Iterate over a xmlQuery object, executing a function for each element. Returns the results in an array.
      */
-    const map = (fn: (v: XmlNode, i: number, a: XmlNode[]) => any) => nodes.map(fn);
+    const map = (fn: (v: xmlQuery.XmlNode, i: number, a: xmlQuery.XmlNode[]) => any) => nodes.map(fn);
 
     /**
      * Iterate over a xmlQuery object, executing a function for each element
      */
-    const each = (fn: (v: XmlNode, i: number, a: XmlNode[]) => void) => nodes.forEach(fn);
+    const each = (fn: (v: xmlQuery.XmlNode, i: number, a: xmlQuery.XmlNode[]) => void) => nodes.forEach(fn);
 
     /**
      * Get length
@@ -123,5 +99,32 @@ const xmlQuery = (ast: XmlNode|XmlNode[]) => {
         size,
     };
 };
+
+namespace xmlQuery {
+
+    export interface XmlNode {
+        name: string;
+        type: string;
+        value: string;
+        parent: XmlNode;
+        attributes: { [name: string]: string };
+        children: XmlNode[];
+    }
+
+    export interface XmlQuery {
+        attr: Function;
+        children: Function;
+        each: Function;
+        eq: Function;
+        find: Function;
+        first: Function;
+        get: Function;
+        last: Function;
+        length: number;
+        map: Function;
+        prop: Function;
+        size: Function;
+    }
+}
 
 export = xmlQuery;
