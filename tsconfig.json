@@ -5,9 +5,11 @@
         "noImplicitAny": false,
         "sourceMap": false,
         "outDir": "build",
-        "removeComments": true
+        "removeComments": true,
+        "declaration": true
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "build"
     ]
 }
