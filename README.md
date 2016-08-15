@@ -28,6 +28,8 @@ The following XML will be used to illustrate all examples
 Let's read the XML using [xml-reader](http://github.com/pladaria/xml-reader).
 
 ```javascript
+const XmlReader = require('xml-reader');
+
 const xml =
 `<message id="1001" date="2016-06-19">
     <from>Bob</from>
@@ -36,13 +38,7 @@ const xml =
     <body>Bla bla bla</body>
 </message>`;
 
-const reader = xmlReader.create();
-
-reader.on('done', ast => {
-    // do something with the ast
-});
-
-reader.parse(xml);
+const ast = XmlReader.parseSync(xml);
 ```
 
 ### xmlQuery()
