@@ -78,7 +78,7 @@ xmlQuery(ast).find('body'); // xmlQuery containing the body element
 
 ### .has()
 
-Returns `true` if it has the given element. Faster than find because it stops on first occurence.
+Returns `true` if it has the given element. Faster than `find()` because it stops on first occurence.
 
 ```javascript
 xmlQuery(ast).has('body'); // true
