@@ -45,6 +45,9 @@
     "type": "git",
     "url": "git+https://github.com/pladaria/xml-query.git"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "bugs": {
     "url": "https://github.com/pladaria/xml-query/issues"
   },
