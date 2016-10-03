@@ -22,6 +22,9 @@
     "tags",
     "values",
     "attributes",
+    "find",
+    "children",
+    "nodes",
     "xpath"
   ],
   "author": "Pedro Ladaria <pedro.ladaria@gmail.com>",
