@@ -6,6 +6,9 @@ var xmlQuery = function (ast) {
     var nodes = Array.isArray(ast) ? ast : (ast ? [ast] : []);
     var length = nodes.length;
     var get = function (index) { return nodes[index]; };
+    var children = function () {
+        return xmlQuery(flatMap(nodes, function (node) { return node.children; }));
+    };
     var findInNode = function (node, sel) {
         var res = (node.name === sel) ? [node] : [];
         return res.concat(flatMap(node.children, function (node) { return findInNode(node, sel); }));
@@ -13,8 +16,14 @@ var xmlQuery = function (ast) {
     var find = function (sel) {
         return xmlQuery(flatMap(nodes, function (node) { return findInNode(node, sel); }));
     };
-    var children = function () {
-        return xmlQuery(flatMap(nodes, function (node) { return node.children; }));
+    var has = function (sel) {
+        if (nodes.length === 0) {
+            return false;
+        }
+        if (nodes.some(function (node) { return node.name === sel; })) {
+            return true;
+        }
+        return children().has(sel);
     };
     var attr = function (name) {
         if (length) {
@@ -52,6 +61,7 @@ var xmlQuery = function (ast) {
         each: each,
         eq: eq,
         find: find,
+        has: has,
         first: first,
         get: get,
         last: last,

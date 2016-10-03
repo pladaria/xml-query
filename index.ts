@@ -1,3 +1,9 @@
+/*!
+ * XML-Query
+ * Copyright (c) 2016 Pedro Ladaria
+ * https://github.com/pladaria/xml-query
+ * MIT Licensed
+ */
 const flatMap = (arr: any[], fn: (v: any, i: number, a: any[]) => any) =>
     Array.prototype.concat.apply([], arr.map(fn));
 
@@ -10,6 +16,12 @@ const xmlQuery = (ast: xmlQuery.XmlNode | xmlQuery.XmlNode[]) => {
      * Retrieve one of the elements
      */
     const get = (index: number) => nodes[index];
+
+    /**
+     * Returns a new xmlQuery object containing the children of the top level elements
+     */
+    const children = () =>
+        xmlQuery(flatMap(nodes, (node) => node.children));
 
     /**
      * Recursively find by name starting in the provided node
@@ -26,10 +38,17 @@ const xmlQuery = (ast: xmlQuery.XmlNode | xmlQuery.XmlNode[]) => {
         xmlQuery(flatMap(nodes, (node) => findInNode(node, sel)));
 
     /**
-     * Returns a new xmlQuery object containing the children of the top level elements
+     * Returns true if it has the given element. Faster than find because it stops on first occurence.
      */
-    const children = () =>
-        xmlQuery(flatMap(nodes, (node) => node.children));
+    const has = (sel: string) => {
+        if (nodes.length === 0) {
+            return false;
+        }
+        if (nodes.some((node) => node.name === sel)) {
+            return true;
+        }
+        return children().has(sel);
+    }
 
     /**
      * Get all attributes. If a name is provided, it returns the value for that key
@@ -102,6 +121,7 @@ const xmlQuery = (ast: xmlQuery.XmlNode | xmlQuery.XmlNode[]) => {
         each,
         eq,
         find,
+        has,
         first,
         get,
         last,

@@ -205,3 +205,9 @@ test.cb('size, length', t => {
     });
     reader.parse(xmlMessage1);
 });
+
+test('has', t => {
+    const ast = xmlReader.parseSync(xmlMessage1);
+    t.is(xQuery(ast).has('body'), true);
+    t.is(xQuery(ast).has('nobody'), false);
+});
