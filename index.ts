@@ -130,6 +130,7 @@ const xmlQuery = (ast: xmlQuery.XmlNode | xmlQuery.XmlNode[]) => {
         prop,
         size,
         text,
+        ast,
     };
 };
 

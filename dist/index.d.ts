@@ -15,6 +15,7 @@ declare const xmlQuery: (ast: xmlQuery.XmlNode | xmlQuery.XmlNode[]) => {
     prop: (name: string) => any;
     size: () => number;
     text: () => string;
+    ast: xmlQuery.XmlNode | xmlQuery.XmlNode[];
 };
 declare namespace xmlQuery {
     interface XmlNode {
