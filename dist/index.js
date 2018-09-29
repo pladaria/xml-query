@@ -70,6 +70,7 @@ var xmlQuery = function (ast) {
         prop: prop,
         size: size,
         text: text,
+        ast: ast,
     };
 };
 module.exports = xmlQuery;
