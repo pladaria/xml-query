@@ -7,7 +7,7 @@ const xmlMessage1 =
     <to>Alice</to>
     <from>Bob</from>
     <subject>Hello</subject>
-    <body>This is a demo!</body>
+    <body type="text">This is a demo!</body>
 </message>`;
 
 const xmlMessage2 =
@@ -94,6 +94,19 @@ test.cb('find deep', t => {
         t.is(result.get(0).children[0].value, 'Alice');
         t.is(result.get(1).children[0].value, 'Carl');
         t.is(result.get(2).children[0].value, 'Alice');
+        t.end();
+    });
+    reader.parse(xmlMessages);
+});
+
+test.cb('find element by name and attributes', t => {
+    const reader = xmlReader.create();
+    reader.on('done', ast => {
+        const xq = xQuery(ast);
+        const result = xq.find('body', {'type': 'text'});
+        t.is(result.length, 2, 'three elements found');
+        t.is(result.get(0).children[0].value, 'This is a demo!');
+        t.is(result.get(1).children[0].value, 'This is a demo!');
         t.end();
     });
     reader.parse(xmlMessages);

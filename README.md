@@ -42,7 +42,7 @@ const xml =
     <from>Bob</from>
     <to>Alice</to>
     <subject>Hello</subject>
-    <body>Bla bla bla</body>
+    <body type="text">Bla bla bla</body>
 </message>`;
 
 const ast = XmlReader.parseSync(xml);
@@ -74,6 +74,12 @@ Find by name. Including top level nodes and all its children.
 
 ```javascript
 xmlQuery(ast).find('body'); // xmlQuery containing the body element
+```
+
+Attributes can be provided to find elements which match the name and the attributes.
+
+```javascript
+xmlQuery(ast).find('body', {'type': 'text'}); // xmlQuery containing the body element which has a 'type' attribute of value 'text'
 ```
 
 ### .has()
