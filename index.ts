@@ -26,16 +26,17 @@ const xmlQuery = (ast: xmlQuery.XmlNode | xmlQuery.XmlNode[]) => {
     /**
      * Recursively find by name starting in the provided node
      */
-    const findInNode = (node: xmlQuery.XmlNode, sel: string) => {
-        const res = (node.name === sel) ? [node] : [];
-        return res.concat(flatMap(node.children, (node) => findInNode(node, sel)));
+    const findInNode = (node: xmlQuery.XmlNode, sel: string, attr: { [name: string]: string }) => {
+        const reducer = (acc, key) => acc && (attr[key] === node.attributes[key]);
+        const res = (node.name === sel && Object.keys(attr).reduce(reducer, true)) ? [node] : [];
+        return res.concat(flatMap(node.children, (node) => findInNode(node, sel, attr)));
     };
 
     /**
      * Find by name. Including top level nodes and all its children.
      */
-    const find = (sel: string) =>
-        xmlQuery(flatMap(nodes, (node) => findInNode(node, sel)));
+    const find = (sel: string, attr: { [name: string]: string } = {}) =>
+        xmlQuery(flatMap(nodes, (node) => findInNode(node, sel, attr)));
 
     /**
      * Returns true if it has the given element. Faster than find because it stops on first occurence.

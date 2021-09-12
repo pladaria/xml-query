@@ -9,12 +9,14 @@ var xmlQuery = function (ast) {
     var children = function () {
         return xmlQuery(flatMap(nodes, function (node) { return node.children; }));
     };
-    var findInNode = function (node, sel) {
-        var res = (node.name === sel) ? [node] : [];
-        return res.concat(flatMap(node.children, function (node) { return findInNode(node, sel); }));
+    var findInNode = function (node, sel, attr) {
+        var reducer = function (acc, key) { return acc && (attr[key] === node.attributes[key]); };
+        var res = (node.name === sel && Object.keys(attr).reduce(reducer, true)) ? [node] : [];
+        return res.concat(flatMap(node.children, function (node) { return findInNode(node, sel, attr); }));
     };
-    var find = function (sel) {
-        return xmlQuery(flatMap(nodes, function (node) { return findInNode(node, sel); }));
+    var find = function (sel, attr) {
+        if (attr === void 0) { attr = {}; }
+        return xmlQuery(flatMap(nodes, function (node) { return findInNode(node, sel, attr); }));
     };
     var has = function (sel) {
         if (nodes.length === 0) {

@@ -5,7 +5,9 @@ declare const xmlQuery: (ast: xmlQuery.XmlNode | xmlQuery.XmlNode[]) => {
     children: () => any;
     each: (fn: (v: xmlQuery.XmlNode, i: number, a: xmlQuery.XmlNode[]) => void) => void;
     eq: (index: number) => any;
-    find: (sel: string) => any;
+    find: (sel: string, attr?: {
+        [name: string]: string;
+    }) => any;
     has: (sel: string) => any;
     first: () => any;
     get: (index: number) => xmlQuery.XmlNode;
